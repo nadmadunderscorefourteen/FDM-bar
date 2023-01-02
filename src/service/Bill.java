@@ -13,34 +13,35 @@ public class Bill {
 		this.softDrinkAmount = softDrinkAmount;
 	}
 
-	public double feeding() {
+	private double feeding() {
 		return beer * beerAmount + barbecue * barbecueAmount + softDrink * softDrinkAmount;
 	}
 
-	public double cover() {
+	private double cover() {
 		return (feeding() > 30) ? 0 : 4.0;
 	}
 
-	public double ticket() {
-		return (gender.charAt(0) == 'F') ? 8.0 : 10.0;
+	private double ticket() {
+		return (gender.equalsIgnoreCase("F")) ? 8.0 : 10.0;
 	}
 
-	public double total() {
+	private double total() {
 		return feeding() + cover() + ticket();
 	}
 	
-	public void print() {
+	private boolean isCoverArtFree() {
+		return (cover() != 0.0) ? true : false; 
+	}
+	
+	public void printReport() {
 		System.out.println();
 		System.out.println("RELATÓRIO:");
 		System.out.printf("Consumo = R$ %.2f\n", feeding());
 		
-		if(cover() != 0.0) {
-			System.out.printf("Couvert = R$ %.2f\n", cover());
-		} else {
-			System.out.println("Isento de Couvert");
-		}
-		
-		System.out.printf("Ingresso = R$ = %.2f\n", ticket());
+		if(isCoverArtFree()) System.out.printf("Couvert = R$ %.2f\n", cover());
+		else System.out.println("Isento de Couvert");
+				
+		System.out.printf("Ingresso = R$ %.2f\n", ticket());
 		System.out.println();
 		System.out.printf("Valor total a pagar = R$ %.2f\n", total());
 	}
